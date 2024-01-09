@@ -1,9 +1,7 @@
-/// <reference types="@solana/web3.js" />
 /// <reference types="bn.js" />
+/// <reference types="@solana/web3.js" />
 import { GetStructureSchema } from '../marshmallow';
-export declare const STABLE_STATE_LAYOUT_V1: import("../marshmallow").Structure<import("@solana/web3.js").PublicKey | import("bn.js") | import("bn.js")[], "", {
-    status: import("bn.js");
-    owner: import("@solana/web3.js").PublicKey;
+export declare const STABLE_STATE_LAYOUT_V1: import("../marshmallow").Structure<import("bn.js") | import("@solana/web3.js").PublicKey | import("bn.js")[], "", {
     baseMint: import("@solana/web3.js").PublicKey;
     quoteMint: import("@solana/web3.js").PublicKey;
     lpMint: import("@solana/web3.js").PublicKey;
@@ -14,6 +12,8 @@ export declare const STABLE_STATE_LAYOUT_V1: import("../marshmallow").Structure<
     marketProgramId: import("@solana/web3.js").PublicKey;
     marketId: import("@solana/web3.js").PublicKey;
     modelDataAccount: import("@solana/web3.js").PublicKey;
+    status: import("bn.js");
+    owner: import("@solana/web3.js").PublicKey;
     nonce: import("bn.js");
     accountType: import("bn.js");
     maxOrder: import("bn.js");
