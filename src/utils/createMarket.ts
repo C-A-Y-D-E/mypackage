@@ -2,7 +2,7 @@ import { createInitializeAccountInstruction } from '@solana/spl-token'
 import { Connection, PublicKey, SystemProgram, TransactionInstruction } from '@solana/web3.js'
 import BN from 'bn.js'
 
-import { Base, generatePubKey, InstructionType, TxVersion } from '../base'
+import { Base, ComputeBudgetConfig, generatePubKey, InstructionType, TxVersion } from '../base'
 import { CacheLTA, splitTxAndSigners, SYSVAR_RENT_PUBKEY, TOKEN_PROGRAM_ID } from '../common'
 import { ZERO } from '../entity'
 import { blob, publicKey, struct, u16, u32, u64, u8, WideBits } from '../marshmallow'
@@ -56,6 +56,7 @@ export class MarketV2 extends Base {
     makeTxVersion,
     lookupTableCache,
     space,
+    computeBudgetConfig,
   }: {
     makeTxVersion: T
     lookupTableCache?: CacheLTA
@@ -77,6 +78,7 @@ export class MarketV2 extends Base {
     lotSize: number
     tickSize: number
     dexProgramId: PublicKey
+    computeBudgetConfig?: ComputeBudgetConfig
   }) {
     const market = generatePubKey({ fromPublicKey: wallet, programId: dexProgramId })
     const requestQueue = generatePubKey({ fromPublicKey: wallet, programId: dexProgramId })
@@ -134,6 +136,7 @@ export class MarketV2 extends Base {
         vaultSignerNonce,
         baseLotSize,
         quoteLotSize,
+        computeBudgetConfig,
       },
     })
 
@@ -142,7 +145,7 @@ export class MarketV2 extends Base {
       innerTransactions: await splitTxAndSigners({
         connection,
         makeTxVersion,
-        computeBudgetConfig: undefined,
+        computeBudgetConfig: computeBudgetConfig,
         payer: wallet,
         innerTransaction: ins.innerTransactions,
         lookupTableCache,
@@ -183,6 +186,7 @@ export class MarketV2 extends Base {
 
       baseLotSize: BN
       quoteLotSize: BN
+      computeBudgetConfig?: ComputeBudgetConfig
     }
   }) {
     const ins1: TransactionInstruction[] = []
